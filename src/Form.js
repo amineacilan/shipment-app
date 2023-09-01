@@ -10,7 +10,7 @@ import toast, { Toaster } from "react-hot-toast";
 const Form = () => {
   const { handleSubmit, control } = useForm();
   const [products, setProducts] = useState([]);
-  const [formData, setFormData] = useState({});
+  const [customers, setCustomers] = useState([]);
   const [orderId, setOrderId] = useState({});
 
   const notify = () => {
@@ -26,24 +26,18 @@ const Form = () => {
       .then((response) => response.json())
       .then((data) => this.setState({ post: data.id }));
   };
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-    console.log(formData);
-  };
 
-  /*  useEffect(() => {
-      axios.get("http://localhost:5282/api/Product")
-
-
-  }, []); */
 
   useEffect(() => {
-    axios("http://localhost:5282/api/Product").then((res) =>
-    console.log(res.data)
+    axios("http://localhost:5282/api/Product").then(
+      (res) => console.log(res.data)
+      //setProducts(res.data)
     );
-    /* console.log(products) */
-    //setProducts(res.data)
+
+    axios("http://localhost:5282/api/Customer").then(
+      (res) => console.log(res.data)
+      //setCustomers(res.data),
+    );
   }, []);
 
   return (
@@ -54,6 +48,7 @@ const Form = () => {
             id="product"
             options={top100Films.map((option) => option.title)}
             //top100Films.map((option) => option.title)
+            //products
             renderInput={(params) => (
               <TextField {...params} label="Ürün Seçiniz" />
             )}
@@ -63,8 +58,10 @@ const Form = () => {
       <div>
         <Stack sx={{ width: 300 }}>
           <Autocomplete
-            id="product"
+            id="customers"
             options={top100Films.map((option) => option.title)}
+            //top100Films.map((option) => option.title)
+            //customers
             renderInput={(params) => (
               <TextField {...params} label="Müşteri Seçiniz" />
             )}
